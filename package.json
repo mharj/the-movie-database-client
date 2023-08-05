@@ -1,0 +1,93 @@
+{
+	"name": "@mharj/the-movie-database-client",
+	"version": "0.0.1",
+	"description": "The Movie Database API client",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"require": "./dist/index.js",
+			"import": "./dist/index.mjs",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"scripts": {
+		"build": "tsup src/index.ts --format cjs,esm --dts --clean",
+		"prepublishOnly": "npm run build",
+		"test": "nyc mocha",
+		"coverage": "nyc report --reporter=lcovonly",
+		"lint": "eslint src"
+	},
+	"files": [
+		"dist"
+	],
+	"mocha": {
+		"exit": true,
+		"extension": [
+			"ts",
+			"js"
+		],
+		"recursive": true,
+		"require": [
+			"ts-node/register",
+			"source-map-support/register"
+		],
+		"reporters": [
+			"spec",
+			"mocha-junit-reporter"
+		]
+	},
+	"nyc": {
+		"check-coverage": true,
+		"extension": [
+			".ts",
+			".js"
+		],
+		"exclude": [
+			"src/handlers",
+			"test"
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mharj/the-movie-database-client.git"
+	},
+	"keywords": [
+		"TMDB",
+		"movie",
+		"database",
+		"api"
+	],
+	"author": "mharj",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/mharj/the-movie-database-client/issues"
+	},
+	"homepage": "https://github.com/mharj/the-movie-database-client#readme",
+	"devDependencies": {
+		"@types/chai": "^4.3.5",
+		"@types/mocha": "^10.0.1",
+		"@types/node": "^18.17.2",
+		"@typescript-eslint/eslint-plugin": "^6.2.1",
+		"@typescript-eslint/parser": "^6.2.1",
+		"chai": "^4.3.7",
+		"dotenv": "^16.3.1",
+		"eslint": "^8.46.0",
+		"eslint-config-prettier": "^8.10.0",
+		"eslint-config-standard": "^17.1.0",
+		"eslint-plugin-deprecation": "^1.5.0",
+		"eslint-plugin-prettier": "^5.0.0",
+		"eslint-plugin-sonarjs": "^0.20.0",
+		"mocha": "^10.2.0",
+		"nyc": "^15.1.0",
+		"prettier": "^3.0.1",
+		"ts-node": "^10.9.1",
+		"tsup": "^7.2.0",
+		"typescript": "^5.1.6",
+		"zod": "^3.21.4"
+	},
+	"dependencies": {
+		"mharj-result": "^0.5.1"
+	}
+}
