@@ -1,27 +1,8 @@
+import {companySchema} from './company';
+import {countrySchema} from './country';
+import {genreSchema} from './genre';
+import {languageSchema} from './language';
 import {z} from 'zod';
-
-const genreSchema = z.object({
-	id: z.number(),
-	name: z.string(),
-});
-
-const productionCompanySchema = z.object({
-	id: z.number(),
-	logo_path: z.string().nullable(),
-	name: z.string(),
-	origin_country: z.string(),
-});
-
-const productionCountrySchema = z.object({
-	iso_3166_1: z.string(),
-	name: z.string(),
-});
-
-const languageSchema = z.object({
-	english_name: z.string(),
-	iso_639_1: z.string(),
-	name: z.string(),
-});
 
 const collectionSchema = z.object({
 	backdrop_path: z.string().nullable(),
@@ -42,8 +23,8 @@ export const movieDetailSchema = z.object({
 	original_language: z.string(),
 	original_title: z.string(),
 	overview: z.string(),
-	production_companies: z.array(productionCompanySchema),
-	production_countries: z.array(productionCountrySchema),
+	production_companies: z.array(companySchema),
+	production_countries: z.array(countrySchema),
 	release_date: z.string(),
 	revenue: z.number(),
 	runtime: z.number().nullable(),
