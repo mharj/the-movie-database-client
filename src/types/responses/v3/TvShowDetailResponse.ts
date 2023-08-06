@@ -1,7 +1,7 @@
-import {companySchema} from './company';
-import {countrySchema} from './country';
-import {genreSchema} from './genre';
-import {languageSchema} from './language';
+import {companyV3Schema} from './company';
+import {countryV3Schema} from './country';
+import {genreV3Schema} from './genre';
+import {languageV3Schema} from './language';
 import {z} from 'zod';
 
 const createdBy = z.object({
@@ -38,13 +38,13 @@ const lastEpisodeToAir = z.object({
 	vote_count: z.number(),
 });
 
-export const tvShowDetailSchema = z.object({
+export const tvShowDetailV3Schema = z.object({
 	adult: z.boolean(),
 	backdrop_path: z.string().nullable(),
 	created_by: z.array(createdBy),
 	episode_run_time: z.array(z.number()),
 	first_air_date: z.string(),
-	genres: z.array(genreSchema),
+	genres: z.array(genreV3Schema),
 	homepage: z.string().nullable(),
 	id: z.number(),
 	in_production: z.boolean(),
@@ -52,7 +52,7 @@ export const tvShowDetailSchema = z.object({
 	last_air_date: z.string(),
 	last_episode_to_air: lastEpisodeToAir,
 	name: z.string(),
-	networks: z.array(companySchema),
+	networks: z.array(companyV3Schema),
 	next_episode_to_air: z.string().nullable(),
 	number_of_episodes: z.number(),
 	number_of_seasons: z.number(),
@@ -62,10 +62,10 @@ export const tvShowDetailSchema = z.object({
 	overview: z.string(),
 	popularity: z.number(),
 	poster_path: z.string().nullable(),
-	production_companies: z.array(companySchema),
-	production_countries: z.array(countrySchema),
+	production_companies: z.array(companyV3Schema),
+	production_countries: z.array(countryV3Schema),
 	seasons: z.array(seasonSchema),
-	spoken_languages: z.array(languageSchema),
+	spoken_languages: z.array(languageV3Schema),
 	status: z.string(),
 	tagline: z.string().nullable(),
 	type: z.string(),
@@ -73,18 +73,18 @@ export const tvShowDetailSchema = z.object({
 	vote_count: z.number(),
 });
 
-export type TvShowDetailResponse = z.infer<typeof tvShowDetailSchema>;
+export type TvShowDetailV3Response = z.infer<typeof tvShowDetailV3Schema>;
 
-export function isTvShowDetailResponse(data: unknown): data is TvShowDetailResponse {
-	return tvShowDetailSchema.safeParse(data).success;
+export function isTvShowDetailV3Response(data: unknown): data is TvShowDetailV3Response {
+	return tvShowDetailV3Schema.safeParse(data).success;
 }
 
-export function assertTvShowDetailResponse(data: unknown): asserts data is TvShowDetailResponse {
-	tvShowDetailSchema.parse(data);
+export function assertTvShowDetailV3Response(data: unknown): asserts data is TvShowDetailV3Response {
+	tvShowDetailV3Schema.parse(data);
 }
 
-export function testAssertTvShowDetailResponse(data: unknown): asserts data is TvShowDetailResponse {
+export function testAssertTvShowDetailV3Response(data: unknown): asserts data is TvShowDetailV3Response {
 	if (process.env.NODE_ENV === 'test') {
-		tvShowDetailSchema.parse(data);
+		tvShowDetailV3Schema.parse(data);
 	}
 }

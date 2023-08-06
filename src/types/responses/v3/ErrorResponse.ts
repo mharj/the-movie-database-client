@@ -1,13 +1,13 @@
 import {z} from 'zod';
 
-export const errorSchema = z.object({
+export const errorV3Schema = z.object({
 	success: z.boolean(),
 	status_code: z.number(),
 	status_message: z.string(),
 });
 
-export type ErrorResponse = z.infer<typeof errorSchema>;
+export type ErrorV3Response = z.infer<typeof errorV3Schema>;
 
-export function isErrorResponse(data: unknown): data is ErrorResponse {
-	return errorSchema.safeParse(data).success;
+export function isErrorV3Response(data: unknown): data is ErrorV3Response {
+	return errorV3Schema.safeParse(data).success;
 }

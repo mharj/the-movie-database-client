@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-const movieSearchResultSchema = z.object({
+const movieSearchResultV3Schema = z.object({
 	adult: z.boolean(),
 	backdrop_path: z.string().nullable(),
 	genre_ids: z.array(z.number()),
@@ -17,34 +17,34 @@ const movieSearchResultSchema = z.object({
 	vote_count: z.number(),
 });
 
-export const movieSearchResponseSchema = z.object({
+export const movieSearchResponseV3Schema = z.object({
 	page: z.number(),
-	results: z.array(movieSearchResultSchema),
+	results: z.array(movieSearchResultV3Schema),
 	total_pages: z.number(),
 	total_results: z.number(),
 });
 
-export type MovieSearchResponse = z.infer<typeof movieSearchResponseSchema>;
+export type MovieSearchV3Response = z.infer<typeof movieSearchResponseV3Schema>;
 
 /**
  * Type guard for MovieSearchResponse
  */
-export function isMovieSearchResponse(data: unknown): data is MovieSearchResponse {
-	return movieSearchResponseSchema.safeParse(data).success;
+export function isMovieSearchV3Response(data: unknown): data is MovieSearchV3Response {
+	return movieSearchResponseV3Schema.safeParse(data).success;
 }
 
 /**
  * asserts MovieSearchResponse
  */
-export function assertMovieSearchResponse(data: unknown): asserts data is MovieSearchResponse {
-	movieSearchResponseSchema.parse(data);
+export function assertMovieSearchV3Response(data: unknown): asserts data is MovieSearchV3Response {
+	movieSearchResponseV3Schema.parse(data);
 }
 
 /**
  * asserts MovieSearchResponse only for NODE_ENV === 'test'
  */
-export function testAssertMovieSearchResponse(data: unknown): asserts data is MovieSearchResponse {
+export function testAssertMovieSearchV3Response(data: unknown): asserts data is MovieSearchV3Response {
 	if (process.env.NODE_ENV === 'test') {
-		movieSearchResponseSchema.parse(data);
+		movieSearchResponseV3Schema.parse(data);
 	}
 }

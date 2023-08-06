@@ -2,24 +2,24 @@
 /* eslint-disable no-unused-expressions */
 import 'mocha';
 import * as chai from 'chai';
-import {assertTvShowDetailResponse, isTvShowDetailResponse, testAssertTvShowDetailResponse} from '../src/types/responses/v3/TvShowDetailResponse';
+import {assertTvShowDetailV3Response, isTvShowDetailV3Response, testAssertTvShowDetailV3Response} from '../src/types/responses/v3/TvShowDetailResponse';
 import {ZodError} from 'zod';
 
 const expect = chai.expect;
 
-describe('MovieDetailResponse', () => {
+describe('MovieDetailV3Response', () => {
 	beforeEach(() => {
 		process.env.NODE_ENV = 'test';
 	});
 	it('should validate', () => {
-		expect(isTvShowDetailResponse(undefined)).to.be.false;
+		expect(isTvShowDetailV3Response(undefined)).to.be.false;
 	});
 	it('should assert', () => {
-		expect(() => assertTvShowDetailResponse(undefined)).to.throw(ZodError);
-		expect(() => testAssertTvShowDetailResponse(undefined)).to.throw(ZodError);
+		expect(() => assertTvShowDetailV3Response(undefined)).to.throw(ZodError);
+		expect(() => testAssertTvShowDetailV3Response(undefined)).to.throw(ZodError);
 	});
 	it('should validate', () => {
 		process.env.NODE_ENV = 'production';
-		expect(() => testAssertTvShowDetailResponse(undefined)).not.throw();
+		expect(() => testAssertTvShowDetailV3Response(undefined)).not.throw();
 	});
 });

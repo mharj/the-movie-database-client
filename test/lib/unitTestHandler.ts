@@ -1,27 +1,27 @@
 /* eslint-disable @typescript-eslint/require-await */
 import * as fs from 'fs';
-import {assertMovieDetailResponse, MovieDetailResponse} from '../../src/types/responses/v3/MovieDetailResponse';
-import {assertMovieSearchResponse, MovieSearchResponse} from '../../src/types/responses/v3/MovieSearchResponse';
-import {assertTvShowDetailResponse, TvShowDetailResponse} from '../../src/types/responses/v3/TvShowDetailResponse';
-import {assertTvShowSearchResponse, TvShowSearchResponse} from '../../src/types/responses/v3/TvShowSearchResponse';
+import {assertMovieDetailV3Response, MovieDetailV3Response} from '../../src/types/responses/v3/MovieDetailResponse';
+import {assertMovieSearchV3Response, MovieSearchV3Response} from '../../src/types/responses/v3/MovieSearchResponse';
+import {assertTvShowDetailV3Response, TvShowDetailV3Response} from '../../src/types/responses/v3/TvShowDetailResponse';
+import {assertTvShowSearchV3Response, TvShowSearchV3Response} from '../../src/types/responses/v3/TvShowSearchResponse';
 import {CommonQueryParams, ITheMovieDatabaseHandlerV3} from '../../src/interfaces/ITheMovieDatabaseHandlerV3';
 import {ApiErrorV3} from '../../src/types/responses/v3/ApiError';
 import {readCompressedFile} from './fileUtils';
-import {TvShowSearchParams} from '../../src/types/params/v3/TvShowSearchParams';
+import {TvShowSearchV3Params} from '../../src/types/params/v3/TvShowSearchParams';
 
 async function loadMovieData() {
 	const data: unknown = JSON.parse(await readCompressedFile('./test/data/searchMovies.json.gz'));
-	assertMovieSearchResponse(data);
+	assertMovieSearchV3Response(data);
 	return data;
 }
 
 async function loadTvShowData() {
 	const data: unknown = JSON.parse(await readCompressedFile('./test/data/tvShowSearch.json.gz'));
-	assertTvShowSearchResponse(data);
+	assertTvShowSearchV3Response(data);
 	return data;
 }
 
-let getMovieDataPromise: Promise<MovieSearchResponse> | undefined;
+let getMovieDataPromise: Promise<MovieSearchV3Response> | undefined;
 async function getMovieData() {
 	if (!getMovieDataPromise) {
 		getMovieDataPromise = loadMovieData();
@@ -29,7 +29,7 @@ async function getMovieData() {
 	return getMovieDataPromise;
 }
 
-let getTvShowDataPromise: Promise<TvShowSearchResponse> | undefined;
+let getTvShowDataPromise: Promise<TvShowSearchV3Response> | undefined;
 async function getTvShowData() {
 	if (!getTvShowDataPromise) {
 		getTvShowDataPromise = loadTvShowData();
@@ -44,33 +44,33 @@ function assertParams(params: CommonQueryParams<unknown>) {
 }
 
 export const unitTestV3Handler: ITheMovieDatabaseHandlerV3 = {
-	handleMovieSearch: async (params): Promise<MovieSearchResponse> => {
-		assertParams(params);
-		return getMovieData();
-	},
-	handleMovieDetails: async (id, params): Promise<MovieDetailResponse> => {
+	handleMovieDetails: async (id, params): Promise<MovieDetailV3Response> => {
 		assertParams(params);
 		const fileName = `./test/data/movie_${id}.json.gz`;
 		if (id < 0 || !fs.existsSync(fileName)) {
 			throw new ApiErrorV3('The resource you requested could not be found.', 34);
 		}
 		const data: unknown = JSON.parse(await readCompressedFile(fileName));
-		assertMovieDetailResponse(data);
+		assertMovieDetailV3Response(data);
 		return data;
 	},
-	handleTvShowSearch: async (params: CommonQueryParams<TvShowSearchParams>): Promise<TvShowSearchResponse> => {
+	handleMovieSearch: async (params): Promise<MovieSearchV3Response> => {
 		assertParams(params);
-		return getTvShowData();
+		return getMovieData();
 	},
-	handleTvShowDetails: async (id, params): Promise<TvShowDetailResponse> => {
+	handleTvShowDetails: async (id, params): Promise<TvShowDetailV3Response> => {
 		assertParams(params);
 		const fileName = `./test/data/tv_${id}.json.gz`;
 		if (id < 0 || !fs.existsSync(fileName)) {
 			throw new ApiErrorV3('The resource you requested could not be found.', 34);
 		}
 		const data: unknown = JSON.parse(await readCompressedFile(fileName));
-		assertTvShowDetailResponse(data);
+		assertTvShowDetailV3Response(data);
 		return data;
+	},
+	handleTvShowSearch: async (params: CommonQueryParams<TvShowSearchV3Params>): Promise<TvShowSearchV3Response> => {
+		assertParams(params);
+		return getTvShowData();
 	},
 };
 

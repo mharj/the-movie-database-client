@@ -1,4 +1,4 @@
-export type MovieSearchParams = {
+export type MovieSearchV3Params = {
 	query: string;
 	include_adult?: boolean;
 	language?: string;

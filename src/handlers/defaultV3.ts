@@ -1,16 +1,16 @@
 // istanbul ignore file
 import {CommonQueryParams, ITheMovieDatabaseHandlerV3} from '../interfaces/ITheMovieDatabaseHandlerV3';
-import {MovieDetailResponse, testAssertMovieDetailResponse} from '../types/responses/v3/MovieDetailResponse';
-import {MovieSearchResponse, testAssertMovieSearchResponse} from '../types/responses/v3/MovieSearchResponse';
-import {testAssertTvShowDetailResponse, TvShowDetailResponse} from '../types/responses/v3/TvShowDetailResponse';
-import {testAssertTvShowSearchResponse, TvShowSearchResponse} from '../types/responses/v3/TvShowSearchResponse';
+import {MovieDetailV3Response, testAssertMovieDetailV3Response} from '../types/responses/v3/MovieDetailResponse';
+import {MovieSearchV3Response, testAssertMovieSearchV3Response} from '../types/responses/v3/MovieSearchResponse';
+import {testAssertTvShowDetailV3Response, TvShowDetailV3Response} from '../types/responses/v3/TvShowDetailResponse';
+import {testAssertTvShowSearchV3Response, TvShowSearchV3Response} from '../types/responses/v3/TvShowSearchResponse';
 import {ApiErrorV3} from '../types/responses/v3/ApiError';
-import {isErrorResponse} from '../types/responses/v3/ErrorResponse';
+import {isErrorV3Response} from '../types/responses/v3/ErrorResponse';
 import {isJsonResponse} from '../lib/fetchUtils';
-import {MovieDetailParams} from '../types/params/v3/MovieDetailParams';
-import {MovieSearchParams} from '../types/params/v3/MovieSearchParams';
-import {TvShowDetailParams} from '../types/params/v3/TvShowDetailParams';
-import {TvShowSearchParams} from '../types/params/v3/TvShowSearchParams';
+import {MovieDetailV3Params} from '../types/params/v3/MovieDetailParams';
+import {MovieSearchV3Params} from '../types/params/v3/MovieSearchParams';
+import {TvShowDetailV3Params} from '../types/params/v3/TvShowDetailParams';
+import {TvShowSearchV3Params} from '../types/params/v3/TvShowSearchParams';
 
 const baseUrl = 'https://api.themoviedb.org/3';
 
@@ -28,7 +28,7 @@ async function handleResponse(res: Response): Promise<unknown> {
 	if (!res.ok) {
 		if (isJsonResponse(res)) {
 			const errData: unknown = await res.json();
-			if (isErrorResponse(errData)) {
+			if (isErrorV3Response(errData)) {
 				throw new ApiErrorV3(errData.status_message, errData.status_code);
 			}
 		}
@@ -44,36 +44,36 @@ async function handleResponse(res: Response): Promise<unknown> {
  * Default fetch handler for the v3 API.
  */
 export const defaultV3: ITheMovieDatabaseHandlerV3 = {
-	handleMovieDetails: async (id: number, params: CommonQueryParams<MovieDetailParams>): Promise<MovieDetailResponse> => {
+	handleMovieDetails: async (id: number, params: CommonQueryParams<MovieDetailV3Params>): Promise<MovieDetailV3Response> => {
 		const queryParams = new URLSearchParams(objectValuesToString(params));
 		const req = new Request(`${baseUrl}/movie/${id}?${queryParams.toString()}`);
 		const res = await fetch(req);
 		const data: unknown = await handleResponse(res);
-		testAssertMovieDetailResponse(data);
+		testAssertMovieDetailV3Response(data);
 		return data;
 	},
-	handleMovieSearch: async (search: CommonQueryParams<MovieSearchParams>): Promise<MovieSearchResponse> => {
+	handleMovieSearch: async (search: CommonQueryParams<MovieSearchV3Params>): Promise<MovieSearchV3Response> => {
 		const queryParams = new URLSearchParams(objectValuesToString(search));
 		const req = new Request(`${baseUrl}/search/movie?${queryParams.toString()}`);
 		const res = await fetch(req);
 		const data: unknown = await handleResponse(res);
-		testAssertMovieSearchResponse(data);
+		testAssertMovieSearchV3Response(data);
 		return data;
 	},
-	handleTvShowDetails: async (id: number, params: CommonQueryParams<TvShowDetailParams>): Promise<TvShowDetailResponse> => {
+	handleTvShowDetails: async (id: number, params: CommonQueryParams<TvShowDetailV3Params>): Promise<TvShowDetailV3Response> => {
 		const queryParams = new URLSearchParams(objectValuesToString(params));
 		const req = new Request(`${baseUrl}/tv/${id}?${queryParams.toString()}`);
 		const res = await fetch(req);
 		const data: unknown = await handleResponse(res);
-		testAssertTvShowDetailResponse(data);
+		testAssertTvShowDetailV3Response(data);
 		return data;
 	},
-	handleTvShowSearch: async (search: CommonQueryParams<TvShowSearchParams>): Promise<TvShowSearchResponse> => {
+	handleTvShowSearch: async (search: CommonQueryParams<TvShowSearchV3Params>): Promise<TvShowSearchV3Response> => {
 		const queryParams = new URLSearchParams(objectValuesToString(search));
 		const req = new Request(`${baseUrl}/search/tv?${queryParams.toString()}`);
 		const res = await fetch(req);
 		const data: unknown = await handleResponse(res);
-		testAssertTvShowSearchResponse(data);
+		testAssertTvShowSearchV3Response(data);
 		return data;
 	},
 };

@@ -1,3 +1,3 @@
-export type MovieDetailParams = {
+export type MovieDetailV3Params = {
 	language?: string;
 };

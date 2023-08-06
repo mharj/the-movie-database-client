@@ -1,3 +1,3 @@
-export type TvShowDetailParams = {
+export type TvShowDetailV3Params = {
 	language?: string;
 };

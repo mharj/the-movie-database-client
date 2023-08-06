@@ -7,9 +7,10 @@ import * as dotenv from 'dotenv';
 import * as util from 'util';
 import {getUnitTestMovieIds, getUnitTestTvShowIds, unitTestV3Handler} from './lib/unitTestHandler';
 import {ApiErrorV3} from '../src/types/responses/v3/ApiError';
-import {assertMovieDetailResponse} from '../src/types/responses/v3/MovieDetailResponse';
-import {assertMovieSearchResponse} from '../src/types/responses/v3/MovieSearchResponse';
-import {assertTvShowSearchResponse} from '../src/types/responses/v3/TvShowSearchResponse';
+import {assertMovieDetailV3Response} from '../src/types/responses/v3/MovieDetailResponse';
+import {assertMovieSearchV3Response} from '../src/types/responses/v3/MovieSearchResponse';
+import {assertTvShowDetailV3Response} from '../src/types/responses/v3/TvShowDetailResponse';
+import {assertTvShowSearchV3Response} from '../src/types/responses/v3/TvShowSearchResponse';
 import {TheMovieDatabaseV3} from '../src/';
 
 let apiKey = process.env.THE_MOVIE_DB_API_KEY || 'secret';
@@ -61,7 +62,7 @@ describe('Api V3', () => {
 	describe('movie search', () => {
 		it('should return list', async () => {
 			const data = (await client.searchMovies({query: 'James Bond'})).unwrap();
-			assertMovieSearchResponse(data);
+			assertMovieSearchV3Response(data);
 		});
 		it('should fail if not valid api key', async () => {
 			setApiKey('undefined');
@@ -78,7 +79,7 @@ describe('Api V3', () => {
 					expect(() => res.unwrap()).to.throw(ApiErrorV3, 'The resource you requested could not be found.');
 				} else {
 					const data = res.ok();
-					assertMovieDetailResponse(data);
+					assertMovieDetailV3Response(data);
 				}
 			});
 		});
@@ -101,7 +102,7 @@ describe('Api V3', () => {
 	describe('TV Show search', () => {
 		it('should return list', async () => {
 			const data = (await client.searchTvShows({query: 'Ring'})).unwrap();
-			assertTvShowSearchResponse(data);
+			assertTvShowSearchV3Response(data);
 		});
 		it('should fail if not valid api key', async () => {
 			setApiKey('undefined');
@@ -118,7 +119,7 @@ describe('Api V3', () => {
 					expect(() => res.unwrap()).to.throw(ApiErrorV3, 'The resource you requested could not be found.');
 				} else {
 					const data = res.ok();
-					assertMovieDetailResponse(data);
+					assertTvShowDetailV3Response(data);
 				}
 			});
 		});

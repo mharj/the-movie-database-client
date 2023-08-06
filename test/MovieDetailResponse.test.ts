@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-expressions */
 import 'mocha';
 import * as chai from 'chai';
-import {assertMovieDetailResponse, isMovieDetailResponse, testAssertMovieDetailResponse} from '../src/types/responses/v3/MovieDetailResponse';
+import {assertMovieDetailV3Response, isMovieDetailV3Response, testAssertMovieDetailV3Response} from '../src/types/responses/v3/MovieDetailResponse';
 import {ZodError} from 'zod';
 
 const expect = chai.expect;
@@ -12,14 +12,14 @@ describe('MovieDetailResponse', () => {
 		process.env.NODE_ENV = 'test';
 	});
 	it('should validate', () => {
-		expect(isMovieDetailResponse(undefined)).to.be.false;
+		expect(isMovieDetailV3Response(undefined)).to.be.false;
 	});
 	it('should assert', () => {
-		expect(() => assertMovieDetailResponse(undefined)).to.throw(ZodError);
-		expect(() => testAssertMovieDetailResponse(undefined)).to.throw(ZodError);
+		expect(() => assertMovieDetailV3Response(undefined)).to.throw(ZodError);
+		expect(() => testAssertMovieDetailV3Response(undefined)).to.throw(ZodError);
 	});
 	it('should validate', () => {
 		process.env.NODE_ENV = 'production';
-		expect(() => testAssertMovieDetailResponse(undefined)).not.throw();
+		expect(() => testAssertMovieDetailV3Response(undefined)).not.throw();
 	});
 });

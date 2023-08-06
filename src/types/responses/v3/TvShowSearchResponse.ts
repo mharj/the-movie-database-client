@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-const tvShowSearchResultSchema = z.object({
+const tvShowSearchResultV3Schema = z.object({
 	adult: z.boolean(),
 	backdrop_path: z.string().nullable(),
 	first_air_date: z.string().optional(),
@@ -16,25 +16,25 @@ const tvShowSearchResultSchema = z.object({
 	vote_count: z.number(),
 });
 
-export const tvShowSearchResponseSchema = z.object({
+export const tvShowSearchResponseV3Schema = z.object({
 	page: z.number(),
-	results: z.array(tvShowSearchResultSchema),
+	results: z.array(tvShowSearchResultV3Schema),
 	total_pages: z.number(),
 	total_results: z.number(),
 });
 
-export type TvShowSearchResponse = z.infer<typeof tvShowSearchResponseSchema>;
+export type TvShowSearchV3Response = z.infer<typeof tvShowSearchResponseV3Schema>;
 
-export function isTvShowSearchResponse(data: unknown): data is TvShowSearchResponse {
-	return tvShowSearchResponseSchema.safeParse(data).success;
+export function isTvShowSearchV3Response(data: unknown): data is TvShowSearchV3Response {
+	return tvShowSearchResponseV3Schema.safeParse(data).success;
 }
 
-export function assertTvShowSearchResponse(data: unknown): asserts data is TvShowSearchResponse {
-	tvShowSearchResponseSchema.parse(data);
+export function assertTvShowSearchV3Response(data: unknown): asserts data is TvShowSearchV3Response {
+	tvShowSearchResponseV3Schema.parse(data);
 }
 
-export function testAssertTvShowSearchResponse(data: unknown): asserts data is TvShowSearchResponse {
+export function testAssertTvShowSearchV3Response(data: unknown): asserts data is TvShowSearchV3Response {
 	if (process.env.NODE_ENV === 'test') {
-		tvShowSearchResponseSchema.parse(data);
+		tvShowSearchResponseV3Schema.parse(data);
 	}
 }

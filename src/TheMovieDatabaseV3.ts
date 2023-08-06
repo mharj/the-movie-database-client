@@ -3,15 +3,15 @@ import {Err, Ok, Result} from 'mharj-result';
 import type {ApiErrorV3} from './types/responses/v3/ApiError';
 import {defaultV3} from './handlers/defaultV3';
 import {Loadable} from './types/Loadable';
-import {MovieDetailParams} from './types/params/v3/MovieDetailParams';
-import {MovieDetailResponse} from './types/responses/v3/MovieDetailResponse';
-import {MovieSearchParams} from './types/params/v3/MovieSearchParams';
-import {MovieSearchResponse} from './types/responses/v3/MovieSearchResponse';
+import {MovieDetailV3Params} from './types/params/v3/MovieDetailParams';
+import {MovieDetailV3Response} from './types/responses/v3/MovieDetailResponse';
+import {MovieSearchV3Params} from './types/params/v3/MovieSearchParams';
+import {MovieSearchV3Response} from './types/responses/v3/MovieSearchResponse';
+import {TvShowDetailV3Params} from './types/params/v3/TvShowDetailParams';
+import {TvShowDetailV3Response} from './types/responses/v3/TvShowDetailResponse';
+import {TvShowSearchV3Params} from './types/params/v3/TvShowSearchParams';
+import {TvShowSearchV3Response} from './types/responses/v3/TvShowSearchResponse';
 import {wrapError} from './lib/errorWrapper';
-import {TvShowSearchParams} from './types/params/v3/TvShowSearchParams';
-import {TvShowSearchResponse} from './types/responses/v3/TvShowSearchResponse';
-import {TvShowDetailParams} from './types/params/v3/TvShowDetailParams';
-import {TvShowDetailResponse} from './types/responses/v3/TvShowDetailResponse';
 
 /**
  * TheMovieDatabase API v3 client.
@@ -35,11 +35,11 @@ export class TheMovieDatabaseV3 {
 	 * Query the API for movies.
 	 *
 	 * @param params - search parameters
-	 * @returns - search {@link MovieSearchResponse} Promise {@link Result} on success or {@link ApiErrorV3} | {@link TypeError} | {@link DOMException} on error.
+	 * @returns - search {@link MovieSearchV3Response} Promise {@link Result} on success or {@link ApiErrorV3} | {@link TypeError} | {@link DOMException} on error.
 	 * @example
 	 * const data = (await client.searchMovies({query: 'The Matrix'})).unwrap(); // data is MovieSearchResponse or throws Error
 	 */
-	public async searchMovies(params: MovieSearchParams): Promise<Result<MovieSearchResponse, ApiErrorV3 | TypeError | DOMException>> {
+	public async searchMovies(params: MovieSearchV3Params): Promise<Result<MovieSearchV3Response, ApiErrorV3 | TypeError | DOMException>> {
 		try {
 			return Ok(await this.handler.handleMovieSearch(await this.combineParams(params)));
 		} catch (err) {
@@ -51,11 +51,11 @@ export class TheMovieDatabaseV3 {
 	 * Get details for a movie.
 	 * @param id - Movie ID
 	 * @param params - Query params
-	 * @returns - detail {@link MovieDetailResponse} Promise {@link Result}  on success or {@link ApiErrorV3} | {@link TypeError} | {@link DOMException} on error.
+	 * @returns - detail {@link MovieDetailV3Response} Promise {@link Result}  on success or {@link ApiErrorV3} | {@link TypeError} | {@link DOMException} on error.
 	 * @example
 	 * const data = (await client.getMovieDetails(603, {language: 'en'})).unwrap(); // data is MovieDetailResponse or throws Error
 	 */
-	public async getMovieDetails(id: number, params: MovieDetailParams = {}): Promise<Result<MovieDetailResponse, ApiErrorV3 | TypeError | DOMException>> {
+	public async getMovieDetails(id: number, params: MovieDetailV3Params = {}): Promise<Result<MovieDetailV3Response, ApiErrorV3 | TypeError | DOMException>> {
 		try {
 			return Ok(await this.handler.handleMovieDetails(id, await this.combineParams(params)));
 		} catch (err) {
@@ -67,11 +67,11 @@ export class TheMovieDatabaseV3 {
 	 * Query the API for Tv Shows.
 	 *
 	 * @param params - search parameters
-	 * @returns - search {@link TvShowSearchResponse} Promise {@link Result} on success or {@link ApiErrorV3} | {@link TypeError} | {@link DOMException} on error.
+	 * @returns - search {@link TvShowSearchV3Response} Promise {@link Result} on success or {@link ApiErrorV3} | {@link TypeError} | {@link DOMException} on error.
 	 * @example
 	 * const data = (await client.searchTvShows({query: 'Ring'})).unwrap(); // data is TvShowSearchResponse or throws Error
 	 */
-	public async searchTvShows(params: TvShowSearchParams): Promise<Result<TvShowSearchResponse, ApiErrorV3 | TypeError | DOMException>> {
+	public async searchTvShows(params: TvShowSearchV3Params): Promise<Result<TvShowSearchV3Response, ApiErrorV3 | TypeError | DOMException>> {
 		try {
 			return Ok(await this.handler.handleTvShowSearch(await this.combineParams(params)));
 		} catch (err) {
@@ -83,11 +83,11 @@ export class TheMovieDatabaseV3 {
 	 * Get details for a TV Show.
 	 * @param id - TV Show ID
 	 * @param params - Query params
-	 * @returns - detail {@link TvShowDetailResponse} Promise {@link Result}  on success or {@link ApiErrorV3} | {@link TypeError} | {@link DOMException} on error.
+	 * @returns - detail {@link TvShowDetailV3Response} Promise {@link Result}  on success or {@link ApiErrorV3} | {@link TypeError} | {@link DOMException} on error.
 	 * @example
 	 * const data = (await client.getTvShowDetails(603, {language: 'en'})).unwrap(); // data is TvShowDetailResponse or throws Error
 	 */
-	public async getTvShowDetails(id: number, params: TvShowDetailParams = {}): Promise<Result<TvShowDetailResponse, ApiErrorV3 | TypeError | DOMException>> {
+	public async getTvShowDetails(id: number, params: TvShowDetailV3Params = {}): Promise<Result<TvShowDetailV3Response, ApiErrorV3 | TypeError | DOMException>> {
 		try {
 			return Ok(await this.handler.handleTvShowDetails(id, await this.combineParams(params)));
 		} catch (err) {
