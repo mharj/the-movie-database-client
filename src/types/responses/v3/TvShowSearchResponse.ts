@@ -29,12 +29,17 @@ export function isTvShowSearchV3Response(data: unknown): data is TvShowSearchV3R
 	return tvShowSearchResponseV3Schema.safeParse(data).success;
 }
 
-export function assertTvShowSearchV3Response(data: unknown): asserts data is TvShowSearchV3Response {
+export function assertTvShowSearchV3Response(data: unknown, strict = false): asserts data is TvShowSearchV3Response {
 	tvShowSearchResponseV3Schema.parse(data);
+	if (strict) {
+		tvShowSearchResponseV3Schema.strict().parse(data);
+	} else {
+		tvShowSearchResponseV3Schema.parse(data);
+	}
 }
 
-export function testAssertTvShowSearchV3Response(data: unknown): asserts data is TvShowSearchV3Response {
+export function testAssertTvShowSearchV3Response(data: unknown, strict = false): asserts data is TvShowSearchV3Response {
 	if (process.env.NODE_ENV === 'test') {
-		tvShowSearchResponseV3Schema.parse(data);
+		assertTvShowSearchV3Response(data, strict);
 	}
 }

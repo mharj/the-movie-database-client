@@ -36,15 +36,19 @@ export function isMovieSearchV3Response(data: unknown): data is MovieSearchV3Res
 /**
  * asserts MovieSearchResponse
  */
-export function assertMovieSearchV3Response(data: unknown): asserts data is MovieSearchV3Response {
-	movieSearchResponseV3Schema.parse(data);
+export function assertMovieSearchV3Response(data: unknown, strict = false): asserts data is MovieSearchV3Response {
+	if (strict) {
+		movieSearchResponseV3Schema.strict().parse(data);
+	} else {
+		movieSearchResponseV3Schema.parse(data);
+	}
 }
 
 /**
  * asserts MovieSearchResponse only for NODE_ENV === 'test'
  */
-export function testAssertMovieSearchV3Response(data: unknown): asserts data is MovieSearchV3Response {
+export function testAssertMovieSearchV3Response(data: unknown, strict = false): asserts data is MovieSearchV3Response {
 	if (process.env.NODE_ENV === 'test') {
-		movieSearchResponseV3Schema.parse(data);
+		assertMovieSearchV3Response(data, strict);
 	}
 }

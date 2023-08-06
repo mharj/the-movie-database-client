@@ -79,12 +79,16 @@ export function isTvShowDetailV3Response(data: unknown): data is TvShowDetailV3R
 	return tvShowDetailV3Schema.safeParse(data).success;
 }
 
-export function assertTvShowDetailV3Response(data: unknown): asserts data is TvShowDetailV3Response {
-	tvShowDetailV3Schema.parse(data);
+export function assertTvShowDetailV3Response(data: unknown, strict = false): asserts data is TvShowDetailV3Response {
+	if (strict) {
+		tvShowDetailV3Schema.strict().parse(data);
+	} else {
+		tvShowDetailV3Schema.parse(data);
+	}
 }
 
-export function testAssertTvShowDetailV3Response(data: unknown): asserts data is TvShowDetailV3Response {
+export function testAssertTvShowDetailV3Response(data: unknown, strict = false): asserts data is TvShowDetailV3Response {
 	if (process.env.NODE_ENV === 'test') {
-		tvShowDetailV3Schema.parse(data);
+		assertTvShowDetailV3Response(data, strict);
 	}
 }

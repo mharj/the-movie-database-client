@@ -62,7 +62,7 @@ describe('Api V3', () => {
 	describe('movie search', () => {
 		it('should return list', async () => {
 			const data = (await client.searchMovies({query: 'James Bond'})).unwrap();
-			assertMovieSearchV3Response(data);
+			assertMovieSearchV3Response(data, true);
 		});
 		it('should fail if not valid api key', async () => {
 			setApiKey('undefined');
@@ -79,7 +79,7 @@ describe('Api V3', () => {
 					expect(() => res.unwrap()).to.throw(ApiErrorV3, 'The resource you requested could not be found.');
 				} else {
 					const data = res.ok();
-					assertMovieDetailV3Response(data);
+					assertMovieDetailV3Response(data, true);
 				}
 			});
 		});
@@ -102,7 +102,7 @@ describe('Api V3', () => {
 	describe('TV Show search', () => {
 		it('should return list', async () => {
 			const data = (await client.searchTvShows({query: 'Ring'})).unwrap();
-			assertTvShowSearchV3Response(data);
+			assertTvShowSearchV3Response(data, true);
 		});
 		it('should fail if not valid api key', async () => {
 			setApiKey('undefined');
@@ -119,7 +119,7 @@ describe('Api V3', () => {
 					expect(() => res.unwrap()).to.throw(ApiErrorV3, 'The resource you requested could not be found.');
 				} else {
 					const data = res.ok();
-					assertTvShowDetailV3Response(data);
+					assertTvShowDetailV3Response(data, true);
 				}
 			});
 		});

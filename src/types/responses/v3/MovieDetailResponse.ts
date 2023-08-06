@@ -23,6 +23,8 @@ export const movieDetailV3Schema = z.object({
 	original_language: z.string(),
 	original_title: z.string(),
 	overview: z.string(),
+	popularity: z.number(),
+	poster_path: z.string().nullable(),
 	production_companies: z.array(companyV3Schema),
 	production_countries: z.array(countryV3Schema),
 	release_date: z.string(),
@@ -30,7 +32,7 @@ export const movieDetailV3Schema = z.object({
 	runtime: z.number().nullable(),
 	spoken_languages: z.array(languageV3Schema),
 	status: z.string(),
-	tag_line: z.string().optional(),
+	tagline: z.string().optional(),
 	title: z.string(),
 	video: z.boolean(),
 	vote_average: z.number(),
@@ -49,15 +51,19 @@ export function isMovieDetailV3Response(data: unknown): data is MovieDetailV3Res
 /**
  * asserts MovieDetailResponse
  */
-export function assertMovieDetailV3Response(data: unknown): asserts data is MovieDetailV3Response {
-	movieDetailV3Schema.parse(data);
+export function assertMovieDetailV3Response(data: unknown, strict = false): asserts data is MovieDetailV3Response {
+	if (strict) {
+		movieDetailV3Schema.strict().parse(data);
+	} else {
+		movieDetailV3Schema.parse(data);
+	}
 }
 
 /**
  * asserts MovieDetailResponse only for NODE_ENV === 'test'
  */
-export function testAssertMovieDetailV3Response(data: unknown): asserts data is MovieDetailV3Response {
+export function testAssertMovieDetailV3Response(data: unknown, strict = false): asserts data is MovieDetailV3Response {
 	if (process.env.NODE_ENV === 'test') {
-		movieDetailV3Schema.parse(data);
+		assertMovieDetailV3Response(data, strict);
 	}
 }
