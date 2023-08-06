@@ -23,11 +23,11 @@ import {TheMovieDatabaseV3} from '@mharj/the-movie-database-client';
 
 const client = new TheMovieDatabaseV3('your-api-key'); // key can be value, Promised value or a function that returns either
 
-const movieSearchList: MovieSearchResponse = (await client.searchMovies({query: 'James Bond'})).unwrap();
+const movieSearchList: MovieSearchV3Response = (await client.searchMovies({query: 'James Bond'})).unwrap();
 
-const movieDetails: MovieDetailResponse = (await client.getMovieDetails(movieSearchList.results[0].id)).unwrap();
+const movieDetails: MovieDetailV3Response = (await client.getMovieDetails(movieSearchList.results[0].id)).unwrap();
 
-const tvSearchList: TvShowSearchResponse = (await client.searchTvShows({query: 'Ring'})).unwrap();
+const tvSearchList: TvShowSearchV3Response = (await client.searchTvShows({query: 'Ring'})).unwrap();
 
-const tvDetails: TvShowDetailResponse = (await client.getTvShowDetails(tvSearchList.results[0].id)).unwrap();
+const tvDetails: TvShowDetailV3Response = (await client.getTvShowDetails(tvSearchList.results[0].id)).unwrap();
 ```
