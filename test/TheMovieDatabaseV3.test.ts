@@ -1,17 +1,15 @@
-/* eslint-disable sonarjs/no-duplicate-string */
-/* eslint-disable import/first */
 process.env.NODE_ENV = 'test';
-import 'mocha';
-import * as chai from 'chai';
+
 import * as dotenv from 'dotenv';
 import * as util from 'util';
-import {getUnitTestMovieIds, getUnitTestTvShowIds, unitTestV3Handler} from './lib/unitTestHandler';
+import {beforeEach, describe, expect, it} from 'vitest';
+import {TheMovieDatabaseV3} from '../src/';
 import {ApiErrorV3} from '../src/types/responses/v3/ApiError';
 import {assertMovieDetailV3Response} from '../src/types/responses/v3/MovieDetailResponse';
 import {assertMovieSearchV3Response} from '../src/types/responses/v3/MovieSearchResponse';
 import {assertTvShowDetailV3Response} from '../src/types/responses/v3/TvShowDetailResponse';
 import {assertTvShowSearchV3Response} from '../src/types/responses/v3/TvShowSearchResponse';
-import {TheMovieDatabaseV3} from '../src/';
+import {getUnitTestMovieIds, getUnitTestTvShowIds, unitTestV3Handler} from './lib/unitTestHandler';
 
 let apiKey = process.env.THE_MOVIE_DB_API_KEY || 'secret';
 
@@ -23,11 +21,9 @@ function setApiKey(key: string): void {
 	apiKey = key;
 }
 
-export function log(obj: unknown): void {
+function log(obj: unknown): void {
 	console.log(util.inspect(obj, false, null, true));
 }
-
-const expect = chai.expect;
 
 dotenv.config();
 
@@ -35,17 +31,17 @@ const idList = getUnitTestMovieIds();
 
 const client: TheMovieDatabaseV3 = new TheMovieDatabaseV3(getApiKey, unitTestV3Handler);
 
-export function sleep(ms: number): Promise<void> {
+function sleep(ms: number): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 // random id builder with max value
-export function randomId(max: number): number {
+function randomId(max: number): number {
 	return Math.floor(Math.random() * max);
 }
 
 // function to build array of random ids and count
-export function randomIds(max: number, count: number): number[] {
+function randomIds(max: number, count: number): number[] {
 	const ids: number[] = [];
 	for (let i = 0; i < count; i++) {
 		ids.push(randomId(max));

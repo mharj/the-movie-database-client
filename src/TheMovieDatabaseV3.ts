@@ -1,17 +1,17 @@
-import {CommonQueryParams, ITheMovieDatabaseHandlerV3} from './interfaces/ITheMovieDatabaseHandlerV3';
-import {Err, Ok, Result} from 'mharj-result';
-import type {ApiErrorV3} from './types/responses/v3/ApiError';
+import {Err, type IResult, Ok} from '@luolapeikko/result-option';
 import {defaultV3} from './handlers/defaultV3';
-import {Loadable} from './types/Loadable';
-import {MovieDetailV3Params} from './types/params/v3/MovieDetailParams';
-import {MovieDetailV3Response} from './types/responses/v3/MovieDetailResponse';
-import {MovieSearchV3Params} from './types/params/v3/MovieSearchParams';
-import {MovieSearchV3Response} from './types/responses/v3/MovieSearchResponse';
-import {TvShowDetailV3Params} from './types/params/v3/TvShowDetailParams';
-import {TvShowDetailV3Response} from './types/responses/v3/TvShowDetailResponse';
-import {TvShowSearchV3Params} from './types/params/v3/TvShowSearchParams';
-import {TvShowSearchV3Response} from './types/responses/v3/TvShowSearchResponse';
+import type {CommonQueryParams, ITheMovieDatabaseHandlerV3} from './interfaces/ITheMovieDatabaseHandlerV3';
 import {wrapError} from './lib/errorWrapper';
+import type {Loadable} from './types/Loadable';
+import type {MovieDetailV3Params} from './types/params/v3/MovieDetailParams';
+import type {MovieSearchV3Params} from './types/params/v3/MovieSearchParams';
+import type {TvShowDetailV3Params} from './types/params/v3/TvShowDetailParams';
+import type {TvShowSearchV3Params} from './types/params/v3/TvShowSearchParams';
+import type {ApiErrorV3} from './types/responses/v3/ApiError';
+import type {MovieDetailV3Response} from './types/responses/v3/MovieDetailResponse';
+import type {MovieSearchV3Response} from './types/responses/v3/MovieSearchResponse';
+import type {TvShowDetailV3Response} from './types/responses/v3/TvShowDetailResponse';
+import type {TvShowSearchV3Response} from './types/responses/v3/TvShowSearchResponse';
 
 /**
  * TheMovieDatabase API v3 client.
@@ -26,7 +26,7 @@ export class TheMovieDatabaseV3 {
 	 * @example
 	 * const client = new TheMovieDatabaseV3('api-key');
 	 */
-	constructor(apiKey: Loadable<string>, handler?: ITheMovieDatabaseHandlerV3) {
+	public constructor(apiKey: Loadable<string>, handler?: ITheMovieDatabaseHandlerV3) {
 		this.handler = handler || defaultV3;
 		this.apiKey = apiKey;
 	}
@@ -39,7 +39,7 @@ export class TheMovieDatabaseV3 {
 	 * @example
 	 * const data = (await client.searchMovies({query: 'The Matrix'})).unwrap(); // data is MovieSearchResponse or throws Error
 	 */
-	public async searchMovies(params: MovieSearchV3Params): Promise<Result<MovieSearchV3Response, ApiErrorV3 | TypeError | DOMException>> {
+	public async searchMovies(params: MovieSearchV3Params): Promise<IResult<MovieSearchV3Response, ApiErrorV3 | TypeError | DOMException>> {
 		try {
 			return Ok(await this.handler.handleMovieSearch(await this.combineParams(params)));
 		} catch (err) {
@@ -55,7 +55,7 @@ export class TheMovieDatabaseV3 {
 	 * @example
 	 * const data = (await client.getMovieDetails(603, {language: 'en'})).unwrap(); // data is MovieDetailResponse or throws Error
 	 */
-	public async getMovieDetails(id: number, params: MovieDetailV3Params = {}): Promise<Result<MovieDetailV3Response, ApiErrorV3 | TypeError | DOMException>> {
+	public async getMovieDetails(id: number, params: MovieDetailV3Params = {}): Promise<IResult<MovieDetailV3Response, ApiErrorV3 | TypeError | DOMException>> {
 		try {
 			return Ok(await this.handler.handleMovieDetails(id, await this.combineParams(params)));
 		} catch (err) {
@@ -71,7 +71,7 @@ export class TheMovieDatabaseV3 {
 	 * @example
 	 * const data = (await client.searchTvShows({query: 'Ring'})).unwrap(); // data is TvShowSearchResponse or throws Error
 	 */
-	public async searchTvShows(params: TvShowSearchV3Params): Promise<Result<TvShowSearchV3Response, ApiErrorV3 | TypeError | DOMException>> {
+	public async searchTvShows(params: TvShowSearchV3Params): Promise<IResult<TvShowSearchV3Response, ApiErrorV3 | TypeError | DOMException>> {
 		try {
 			return Ok(await this.handler.handleTvShowSearch(await this.combineParams(params)));
 		} catch (err) {
@@ -87,7 +87,10 @@ export class TheMovieDatabaseV3 {
 	 * @example
 	 * const data = (await client.getTvShowDetails(603, {language: 'en'})).unwrap(); // data is TvShowDetailResponse or throws Error
 	 */
-	public async getTvShowDetails(id: number, params: TvShowDetailV3Params = {}): Promise<Result<TvShowDetailV3Response, ApiErrorV3 | TypeError | DOMException>> {
+	public async getTvShowDetails(
+		id: number,
+		params: TvShowDetailV3Params = {},
+	): Promise<IResult<TvShowDetailV3Response, ApiErrorV3 | TypeError | DOMException>> {
 		try {
 			return Ok(await this.handler.handleTvShowDetails(id, await this.combineParams(params)));
 		} catch (err) {

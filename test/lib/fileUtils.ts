@@ -1,8 +1,8 @@
-import * as zlib from 'zlib';
 import {readFile, writeFile} from 'fs/promises';
+import * as zlib from 'zlib';
 
 // function to compress and save a file to disk
-export async function saveCompressedFile(filePath: string, data: string): Promise<void> {
+export function saveCompressedFile(filePath: string, data: string): Promise<void> {
 	const compressedData = zlib.gzipSync(data);
 	return writeFile(filePath, compressedData);
 }

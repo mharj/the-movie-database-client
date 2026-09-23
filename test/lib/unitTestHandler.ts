@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/require-await */
 import * as fs from 'fs';
-import {assertMovieDetailV3Response, MovieDetailV3Response} from '../../src/types/responses/v3/MovieDetailResponse';
-import {assertMovieSearchV3Response, MovieSearchV3Response} from '../../src/types/responses/v3/MovieSearchResponse';
-import {assertTvShowDetailV3Response, TvShowDetailV3Response} from '../../src/types/responses/v3/TvShowDetailResponse';
-import {assertTvShowSearchV3Response, TvShowSearchV3Response} from '../../src/types/responses/v3/TvShowSearchResponse';
-import {CommonQueryParams, ITheMovieDatabaseHandlerV3} from '../../src/interfaces/ITheMovieDatabaseHandlerV3';
+import type {CommonQueryParams, ITheMovieDatabaseHandlerV3} from '../../src/interfaces/ITheMovieDatabaseHandlerV3';
+import type {TvShowSearchV3Params} from '../../src/types/params/v3/TvShowSearchParams';
 import {ApiErrorV3} from '../../src/types/responses/v3/ApiError';
+import {assertMovieDetailV3Response, type MovieDetailV3Response} from '../../src/types/responses/v3/MovieDetailResponse';
+import {assertMovieSearchV3Response, type MovieSearchV3Response} from '../../src/types/responses/v3/MovieSearchResponse';
+import {assertTvShowDetailV3Response, type TvShowDetailV3Response} from '../../src/types/responses/v3/TvShowDetailResponse';
+import {assertTvShowSearchV3Response, type TvShowSearchV3Response} from '../../src/types/responses/v3/TvShowSearchResponse';
 import {readCompressedFile} from './fileUtils';
-import {TvShowSearchV3Params} from '../../src/types/params/v3/TvShowSearchParams';
 
 async function loadMovieData() {
 	const data: unknown = JSON.parse(await readCompressedFile('./test/data/searchMovies.json.gz'));
@@ -22,7 +21,7 @@ async function loadTvShowData() {
 }
 
 let getMovieDataPromise: Promise<MovieSearchV3Response> | undefined;
-async function getMovieData() {
+function getMovieData() {
 	if (!getMovieDataPromise) {
 		getMovieDataPromise = loadMovieData();
 	}
@@ -30,7 +29,7 @@ async function getMovieData() {
 }
 
 let getTvShowDataPromise: Promise<TvShowSearchV3Response> | undefined;
-async function getTvShowData() {
+function getTvShowData() {
 	if (!getTvShowDataPromise) {
 		getTvShowDataPromise = loadTvShowData();
 	}
@@ -54,7 +53,7 @@ export const unitTestV3Handler: ITheMovieDatabaseHandlerV3 = {
 		assertMovieDetailV3Response(data);
 		return data;
 	},
-	handleMovieSearch: async (params): Promise<MovieSearchV3Response> => {
+	handleMovieSearch: (params): Promise<MovieSearchV3Response> => {
 		assertParams(params);
 		return getMovieData();
 	},
@@ -68,7 +67,7 @@ export const unitTestV3Handler: ITheMovieDatabaseHandlerV3 = {
 		assertTvShowDetailV3Response(data);
 		return data;
 	},
-	handleTvShowSearch: async (params: CommonQueryParams<TvShowSearchV3Params>): Promise<TvShowSearchV3Response> => {
+	handleTvShowSearch: (params: CommonQueryParams<TvShowSearchV3Params>): Promise<TvShowSearchV3Response> => {
 		assertParams(params);
 		return getTvShowData();
 	},
@@ -81,7 +80,7 @@ export function getUnitTestMovieIds(): number[] {
 	for (const file of files) {
 		if (file.startsWith('movie_')) {
 			const id = parseInt(file.replace('movie_', '').replace('.json.gz', ''), 10);
-			if (!isNaN(id)) {
+			if (!Number.isNaN(id)) {
 				ids.push(id);
 			}
 		}
@@ -96,7 +95,7 @@ export function getUnitTestTvShowIds(): number[] {
 	for (const file of files) {
 		if (file.startsWith('tv-')) {
 			const id = parseInt(file.replace('tv-', '').replace('.json.gz', ''), 10);
-			if (!isNaN(id)) {
+			if (!Number.isNaN(id)) {
 				ids.push(id);
 			}
 		}

@@ -1,3 +1,3 @@
-import {ApiErrorV3} from './responses/v3/ApiError';
+import type {ApiErrorV3} from './responses/v3/ApiError';
 
 export type AllErrors = ApiErrorV3 | TypeError | DOMException;

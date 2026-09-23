@@ -1,9 +1,5 @@
-/* eslint-disable no-unused-expressions */
-import 'mocha';
-import * as chai from 'chai';
+import {describe, expect, it} from 'vitest';
 import {isJsonResponse} from '../src/lib/fetchUtils';
-
-const expect = chai.expect;
 
 const jsonResponse = new Response(JSON.stringify({}), {
 	status: 200,

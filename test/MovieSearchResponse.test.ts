@@ -1,11 +1,6 @@
-/* eslint-disable import/first */
-/* eslint-disable no-unused-expressions */
-import 'mocha';
-import * as chai from 'chai';
-import {assertMovieSearchV3Response, isMovieSearchV3Response, testAssertMovieSearchV3Response} from '../src/types/responses/v3/MovieSearchResponse';
+import {beforeEach, describe, expect, it} from 'vitest';
 import {ZodError} from 'zod';
-
-const expect = chai.expect;
+import {assertMovieSearchV3Response, isMovieSearchV3Response, testAssertMovieSearchV3Response} from '../src/types/responses/v3/MovieSearchResponse';
 
 describe('MovieSearchV3Response', () => {
 	beforeEach(() => {

@@ -2,53 +2,30 @@
 	"name": "@mharj/the-movie-database-client",
 	"version": "0.0.4",
 	"description": "The Movie Database API client",
-	"main": "./dist/index.js",
+	"main": "./dist/index.cjs",
 	"module": "./dist/index.mjs",
-	"types": "./dist/index.d.ts",
+	"types": "./dist/index.d.mts",
 	"exports": {
-		".": {
-			"require": "./dist/index.js",
-			"import": "./dist/index.mjs",
-			"types": "./dist/index.d.ts"
-		}
+		"import": {
+			"types": "./dist/index.d.mts",
+			"default": "./dist/index.mjs"
+		},
+		"require": {
+			"types": "./dist/index.d.cts",
+			"default": "./dist/index.cjs"
+		},
+		"default": "./dist/index.mjs"
 	},
 	"scripts": {
-		"build": "tsup src/index.ts --format cjs,esm --dts --clean",
+		"build": "tsdown src/index.ts --format cjs,esm --dts --clean -c tsconfig.build.json",
 		"prepublishOnly": "npm run build",
-		"test": "nyc mocha",
-		"coverage": "nyc report --reporter=lcovonly",
-		"lint": "eslint src"
+		"test": "vitest test --run --no-isolate --coverage",
+		"lint": "biome check",
+		"validate": "tsc --noEmit"
 	},
 	"files": [
 		"dist"
 	],
-	"mocha": {
-		"exit": true,
-		"extension": [
-			"ts",
-			"js"
-		],
-		"recursive": true,
-		"require": [
-			"ts-node/register",
-			"source-map-support/register"
-		],
-		"reporters": [
-			"spec",
-			"mocha-junit-reporter"
-		]
-	},
-	"nyc": {
-		"check-coverage": true,
-		"extension": [
-			".ts",
-			".js"
-		],
-		"exclude": [
-			"src/handlers",
-			"test"
-		]
-	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/mharj/the-movie-database-client.git"
@@ -66,28 +43,20 @@
 	},
 	"homepage": "https://github.com/mharj/the-movie-database-client#readme",
 	"devDependencies": {
-		"@types/chai": "^4.3.5",
-		"@types/mocha": "^10.0.1",
-		"@types/node": "^18.17.2",
-		"@typescript-eslint/eslint-plugin": "^6.2.1",
-		"@typescript-eslint/parser": "^6.2.1",
-		"chai": "^4.3.7",
+		"@biomejs/biome": "^2.5.14",
+		"@luolapeikko/result-option": "^2.4.0",
+		"@types/node": "^24.13.6",
+		"@vitest/coverage-v8": "^5.0.1",
+		"c8": "^12.0.0",
 		"dotenv": "^16.3.1",
-		"eslint": "^8.46.0",
-		"eslint-config-prettier": "^8.10.0",
-		"eslint-config-standard": "^17.1.0",
-		"eslint-plugin-deprecation": "^1.5.0",
-		"eslint-plugin-prettier": "^5.0.0",
-		"eslint-plugin-sonarjs": "^0.20.0",
-		"mocha": "^10.2.0",
-		"nyc": "^15.1.0",
-		"prettier": "^3.0.1",
-		"ts-node": "^10.9.1",
-		"tsup": "^7.2.0",
-		"typescript": "^5.1.6",
+		"tsdown": "^0.23.0",
+		"typescript": "^7.0.2",
+		"vite": "^8.3.0",
+		"vitest": "^5.0.1",
 		"zod": "^3.21.4"
 	},
-	"dependencies": {
-		"mharj-result": "^0.5.1"
-	}
+	"peerDependencies": {
+		"@luolapeikko/result-option": ">=2.0.0"
+	},
+	"packageManager": "pnpm@12.5.1+sha512.e3f305bc784a2bc89f5ad3b6138889470fae8d2af5f36b61216ec91c2c3d64089775f9de38aac331044ea40f245cb0d5666392dfdf65824e1907ef6a2c62de5f"
 }

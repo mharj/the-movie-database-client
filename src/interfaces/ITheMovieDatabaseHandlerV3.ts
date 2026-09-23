@@ -1,11 +1,11 @@
-import {MovieDetailV3Params} from '../types/params/v3/MovieDetailParams';
-import {MovieDetailV3Response} from '../types/responses/v3/MovieDetailResponse';
-import {MovieSearchV3Params} from '../types/params/v3/MovieSearchParams';
-import {MovieSearchV3Response} from '../types/responses/v3/MovieSearchResponse';
-import {TvShowDetailV3Params} from '../types/params/v3/TvShowDetailParams';
-import {TvShowDetailV3Response} from '../types/responses/v3/TvShowDetailResponse';
-import {TvShowSearchV3Params} from '../types/params/v3/TvShowSearchParams';
-import {TvShowSearchV3Response} from '../types/responses/v3/TvShowSearchResponse';
+import type {MovieDetailV3Params} from '../types/params/v3/MovieDetailParams';
+import type {MovieSearchV3Params} from '../types/params/v3/MovieSearchParams';
+import type {TvShowDetailV3Params} from '../types/params/v3/TvShowDetailParams';
+import type {TvShowSearchV3Params} from '../types/params/v3/TvShowSearchParams';
+import type {MovieDetailV3Response} from '../types/responses/v3/MovieDetailResponse';
+import type {MovieSearchV3Response} from '../types/responses/v3/MovieSearchResponse';
+import type {TvShowDetailV3Response} from '../types/responses/v3/TvShowDetailResponse';
+import type {TvShowSearchV3Response} from '../types/responses/v3/TvShowSearchResponse';
 
 export type CommonQueryParams<T> = T & {
 	api_key: string;

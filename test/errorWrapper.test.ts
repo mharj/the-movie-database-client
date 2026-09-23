@@ -1,9 +1,6 @@
-import 'mocha';
-import * as chai from 'chai';
-import {ApiErrorV3} from '../src/types/responses/v3/ApiError';
+import {describe, expect, it} from 'vitest';
 import {wrapError} from '../src/lib/errorWrapper';
-
-const expect = chai.expect;
+import {ApiErrorV3} from '../src/types/responses/v3/ApiError';
 
 describe('wrapError', () => {
 	it('should be valid error value', () => {

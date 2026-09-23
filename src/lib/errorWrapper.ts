@@ -1,4 +1,4 @@
-import {AllErrors} from '../types/Error';
+import type {AllErrors} from '../types/Error';
 import {ApiErrorV3} from '../types/responses/v3/ApiError';
 
 export function wrapError(err: unknown): AllErrors {

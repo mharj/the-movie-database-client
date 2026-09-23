@@ -1,8 +1,8 @@
+import {z} from 'zod';
 import {companyV3Schema} from './company';
 import {countryV3Schema} from './country';
 import {genreV3Schema} from './genre';
 import {languageV3Schema} from './language';
-import {z} from 'zod';
 
 const collectionV3Schema = z.object({
 	backdrop_path: z.string().nullable(),

@@ -1,16 +1,15 @@
-// istanbul ignore file
-import {CommonQueryParams, ITheMovieDatabaseHandlerV3} from '../interfaces/ITheMovieDatabaseHandlerV3';
-import {MovieDetailV3Response, testAssertMovieDetailV3Response} from '../types/responses/v3/MovieDetailResponse';
-import {MovieSearchV3Response, testAssertMovieSearchV3Response} from '../types/responses/v3/MovieSearchResponse';
-import {testAssertTvShowDetailV3Response, TvShowDetailV3Response} from '../types/responses/v3/TvShowDetailResponse';
-import {testAssertTvShowSearchV3Response, TvShowSearchV3Response} from '../types/responses/v3/TvShowSearchResponse';
+import type {CommonQueryParams, ITheMovieDatabaseHandlerV3} from '../interfaces/ITheMovieDatabaseHandlerV3';
+import {isJsonResponse} from '../lib/fetchUtils';
+import type {MovieDetailV3Params} from '../types/params/v3/MovieDetailParams';
+import type {MovieSearchV3Params} from '../types/params/v3/MovieSearchParams';
+import type {TvShowDetailV3Params} from '../types/params/v3/TvShowDetailParams';
+import type {TvShowSearchV3Params} from '../types/params/v3/TvShowSearchParams';
 import {ApiErrorV3} from '../types/responses/v3/ApiError';
 import {isErrorV3Response} from '../types/responses/v3/ErrorResponse';
-import {isJsonResponse} from '../lib/fetchUtils';
-import {MovieDetailV3Params} from '../types/params/v3/MovieDetailParams';
-import {MovieSearchV3Params} from '../types/params/v3/MovieSearchParams';
-import {TvShowDetailV3Params} from '../types/params/v3/TvShowDetailParams';
-import {TvShowSearchV3Params} from '../types/params/v3/TvShowSearchParams';
+import {type MovieDetailV3Response, testAssertMovieDetailV3Response} from '../types/responses/v3/MovieDetailResponse';
+import {type MovieSearchV3Response, testAssertMovieSearchV3Response} from '../types/responses/v3/MovieSearchResponse';
+import {type TvShowDetailV3Response, testAssertTvShowDetailV3Response} from '../types/responses/v3/TvShowDetailResponse';
+import {type TvShowSearchV3Response, testAssertTvShowSearchV3Response} from '../types/responses/v3/TvShowSearchResponse';
 
 const baseUrl = 'https://api.themoviedb.org/3';
 
