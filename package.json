@@ -1,6 +1,6 @@
 {
 	"name": "@mharj/the-movie-database-client",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"description": "The Movie Database API client",
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.mjs",
