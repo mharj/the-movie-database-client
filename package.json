@@ -26,10 +26,7 @@
 	"files": [
 		"dist"
 	],
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/mharj/the-movie-database-client.git"
-	},
+	"repository": "github:mharj/the-movie-database-client",
 	"keywords": [
 		"TMDB",
 		"movie",
